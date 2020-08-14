@@ -1,3 +1,5 @@
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
@@ -5,13 +7,13 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory();
         Terminal terminal = defaultTerminalFactory.createTerminal();
 
-        terminal.setCursorPosition(1, 1);
+/*        terminal.setCursorPosition(1, 1);
         terminal.putCharacter('A');
-        terminal.flush();
+        terminal.flush();*/
 
         /*for (int column = 4; column < 10; column++) {
             terminal.setCursorPosition(column, 4);
@@ -30,6 +32,18 @@ public class Main {
             terminal.putCharacter(str.charAt(i));
         }
 
+        terminal.flush();
+
+        KeyStroke keyStroke = null;
+        do {
+            Thread.sleep(5); // might throw InterruptedException
+            keyStroke = terminal.pollInput();
+        } while (keyStroke == null);
+
+        KeyType type = keyStroke.getKeyType();
+        Character c = keyStroke.getCharacter(); // used Character, not char because it might be null
+
+        System.out.println(c);
         terminal.flush();
 
     }
