@@ -1,9 +1,11 @@
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class Main {
 
@@ -13,8 +15,7 @@ public class Main {
         terminal.setCursorVisible(false);
 
         boolean continueReadingInput = true;
-
-
+        Random random = new Random();
 
 
         int x = 10;
@@ -23,25 +24,28 @@ public class Main {
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
 
-//        terminal.setCursorPosition(12, 12);
-//        terminal.putCharacter('O');
-
-        char [][] map = new char[][]{
-                {'O', ' ', 'O'},
-                {'O', ' ', 'O'},
-                {'O', ' ', 'O'}
-        };
+        TerminalSize size = terminal.getTerminalSize();
+        char[][] map = new char[size.getColumns()][size.getRows()];
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                int bound = random.nextInt(5);
+                if (bound == 1) {
+                    map[i][j] = '\u2588';
+                } else {
+                    map[i][j] = ' ';
+                }
+            }
+        }
 
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 terminal.setCursorPosition(i, j);
-                terminal.putCharacter(map[j][i]);
+                terminal.putCharacter(map[i][j]);
             }
         }
-
+        terminal.flush();
 
         do {
-
             final char removePlayer = ' ';
             KeyStroke keyStroke = null;
             do {
@@ -57,10 +61,13 @@ public class Main {
             } else {
                 System.out.println(c);
 
-                terminal.setCursorPosition(x,y);
+                terminal.setCursorPosition(x, y);
                 terminal.putCharacter(removePlayer);
 
-                switch (type){
+                int lastX = x;
+                int lastY = y;
+
+                switch (type) {
                     case ArrowUp:
                         y--;
                         break;
@@ -75,18 +82,18 @@ public class Main {
                         break;
                 }
                 terminal.setCursorPosition(x, y);
-                if(terminal.getCursorPosition().equals('O')){
-                    continue;
-                }else {
+                if (x >= 0 && x < map.length && y < map[0].length && map[x][y] == ' ') {
+                    terminal.putCharacter(player);
+                    terminal.flush();
+                } else {
+                    terminal.setCursorPosition(lastX, lastY);
+                    x = lastX;
+                    y = lastY;
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
             }
-
-
-
-
-
         } while (continueReadingInput);
     }
 }
+
