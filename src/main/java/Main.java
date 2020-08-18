@@ -54,6 +54,8 @@ public class Main {
         terminal.putCharacter(bomb[p][l]);
         terminal.flush();
 
+
+
         do {
             final char removePlayer = ' ';
             KeyStroke keyStroke = null;
@@ -91,7 +93,7 @@ public class Main {
                         break;
                 }
                 terminal.setCursorPosition(x, y);
-                if (x >= 0 && x < map.length && y < map[0].length && map[x][y] == ' ') {
+                if (x >= 0 && x < map.length && y>=0 && y< map[0].length && map[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
                 } else {
@@ -101,7 +103,10 @@ public class Main {
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
-                if(bomb[x][y] == 'O'){
+                if(bomb[x][y] == map[x][y]){
+                    int g = x + 1;
+                    bomb[x][y] = bomb[g][y];
+                } else if(bomb[x][y] == 'O'){
                     System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
                     terminal.clearScreen();
                     String die = "you died";
