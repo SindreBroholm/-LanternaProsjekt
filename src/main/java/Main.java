@@ -22,10 +22,16 @@ public class Main {
 
         int x = 1;
         int y = 1;
+        int zoombieY = ThreadLocalRandom.current().nextInt(1, 10);
+        int zoombieX = ThreadLocalRandom.current().nextInt(1, 23);
         final char player = 'X';
-        final char zombie = 'Q';
+        final char zombie = 'F';
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
+        terminal.flush();
+        terminal.setCursorPosition(zoombieX, zoombieY);
+        terminal.putCharacter(zombie);
+
 
         TerminalSize size = terminal.getTerminalSize();
 /*        char[][] map = new char[size.getColumns()][size.getRows()];
@@ -40,23 +46,38 @@ public class Main {
             }
         }*/
         char[][] map1 = new char[][]{
-                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
-                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}
+                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}
         };
 
 
         for (int i = 0; i < map1.length; i++) {
             for (int j = 0; j < map1[i].length; j++) {
-                terminal.setCursorPosition(i,j);
+                terminal.setCursorPosition(i, j);
                 terminal.putCharacter(map1[i][j]);
             }
         }
@@ -64,7 +85,7 @@ public class Main {
 
 
         int p = ThreadLocalRandom.current().nextInt(1, 10);
-        int l = ThreadLocalRandom.current().nextInt(1, 28);
+        int l = ThreadLocalRandom.current().nextInt(1, 23);
         char bomb = 'O';
         map1[p][l] = bomb;
         terminal.setCursorPosition(p, l);
@@ -90,32 +111,55 @@ public class Main {
 
                 terminal.setCursorPosition(x, y);
                 terminal.putCharacter(removePlayer);
+                terminal.setCursorPosition(zoombieX, zoombieY);
+                terminal.putCharacter(removePlayer);
+
 
                 int lastX = x;
+                int lastZoombieX = zoombieX;
                 int lastY = y;
+                int lastZoombieY = zoombieY;
 
                 switch (type) {
                     case ArrowUp:
                         y--;
+                        zoombieY--;
                         break;
                     case ArrowDown:
                         y++;
+                        zoombieY++;
                         break;
                     case ArrowLeft:
                         x--;
+                        zoombieX--;
                         break;
                     case ArrowRight:
                         x++;
+                        zoombieX++;
                         break;
                 }
+                System.out.println("X" + zoombieX);
+                if (zoombieX >= 0 && zoombieX < map1.length && zoombieY >= 0 && zoombieY < map1[0].length && map1[zoombieX][zoombieY] == ' ') {
+                    terminal.setCursorPosition(zoombieX, zoombieY);
+                    terminal.putCharacter(zombie);
+                    terminal.flush();
+                }else {
+                    terminal.setCursorPosition(lastZoombieX, lastZoombieY);
+                    zoombieX = lastZoombieX;
+                    zoombieY = lastZoombieY;
+                    terminal.putCharacter(zombie);
+                    terminal.flush();
+                }
+
+
                 terminal.setCursorPosition(x, y);
                 if (x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
-                } else if (map1[x][y] == bomb){
-                    System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
+                } else if (map1[x][y] == bomb) {
+                    System.out.println("You won !");
                     terminal.clearScreen();
-                    String die = "you died";
+                    String die = "WINNER";
                     char[] died = die.toCharArray();
                     for (int i = 0; i < died.length; i++) {
                         terminal.setCursorPosition(i, 20);
@@ -123,7 +167,8 @@ public class Main {
                         terminal.flush();
                         continueReadingInput = false;
                     }
-                } else{
+                }
+                else{
                     terminal.setCursorPosition(lastX, lastY);
                     x = lastX;
                     y = lastY;
@@ -131,12 +176,7 @@ public class Main {
                     terminal.flush();
                 }
 
-                /*if(bomb == map1[x][y]){
-                    int g = x + 1;
-                    map1[p][l] = map1[g][l];
-
-                } else*/
-               /* if (map1[x][y] == bomb) {
+                if (x == zoombieX && y == zoombieY) {
                     System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
                     terminal.clearScreen();
                     String die = "you died";
@@ -147,10 +187,12 @@ public class Main {
                     }
                     terminal.flush();
                     continueReadingInput = false;
-                }*/
+                }
             }
-        } while (continueReadingInput);
+
+
+            } while (continueReadingInput) ;
+        }
     }
-}
 
 
