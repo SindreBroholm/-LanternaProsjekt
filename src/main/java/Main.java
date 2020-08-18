@@ -19,14 +19,15 @@ public class Main {
         Random random = new Random();
 
 
-        int x = 10;
-        int y = 10;
+        int x = 1;
+        int y = 1;
         final char player = 'X';
+        final char zombie = 'Q';
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
 
         TerminalSize size = terminal.getTerminalSize();
-        char[][] map = new char[size.getColumns()][size.getRows()];
+/*        char[][] map = new char[size.getColumns()][size.getRows()];
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 int bound = random.nextInt(5);
@@ -36,12 +37,28 @@ public class Main {
                     map[i][j] = ' ';
                 }
             }
-        }
+        }*/
+        char[][] map1 = new char[][]{
+                {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
+                {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'}
+        };
 
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                terminal.setCursorPosition(i, j);
-                terminal.putCharacter(map[i][j]);
+
+
+
+        for (int i = 0; i < map1.length; i++) {
+            for (int j = 0; j < map1[i].length; j++) {
+                terminal.setCursorPosition(i,j);
+                terminal.putCharacter(map1[i][j]);
             }
         }
         terminal.flush();
@@ -93,7 +110,7 @@ public class Main {
                         break;
                 }
                 terminal.setCursorPosition(x, y);
-                if (x >= 0 && x < map.length && y>=0 && y< map[0].length && map[x][y] == ' ') {
+                if (x >= 0 && x < map1.length && y>=0 && y<map1[0].length && map1[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
                 } else {
@@ -103,7 +120,7 @@ public class Main {
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
-                if(bomb[x][y] == map[x][y]){
+                if(bomb[x][y] == map1[x][y]){
                     int g = x + 1;
                     bomb[x][y] = bomb[g][y];
                 } else if(bomb[x][y] == 'O'){
