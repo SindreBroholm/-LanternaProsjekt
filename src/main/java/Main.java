@@ -4,6 +4,7 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -43,6 +44,14 @@ public class Main {
                 terminal.putCharacter(map[i][j]);
             }
         }
+        terminal.flush();
+
+        char[][] bomb = new char[size.getColumns()][size.getRows()];
+        int p = random.nextInt(80);
+        int l = random.nextInt(24);
+        bomb[p][l] = 'O';
+        terminal.setCursorPosition(p,l);
+        terminal.putCharacter(bomb[p][l]);
         terminal.flush();
 
         do {
@@ -92,8 +101,21 @@ public class Main {
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
+                if(bomb[x][y] == 'O'){
+                    System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
+                    terminal.clearScreen();
+                    String die = "you died";
+                    char[] died = die.toCharArray();
+                    for (int i = 0; i < died.length; i++) {
+                        terminal.setCursorPosition(i,20);
+                        terminal.putCharacter(died[i]);
+                    }
+                    terminal.flush();
+                    continueReadingInput = false;
+                }
             }
         } while (continueReadingInput);
     }
 }
+
 
