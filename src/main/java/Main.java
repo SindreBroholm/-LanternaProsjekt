@@ -7,6 +7,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
@@ -39,20 +40,18 @@ public class Main {
             }
         }*/
         char[][] map1 = new char[][]{
-                {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','x'},
-                {'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x'}
+                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'x'},
+                {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'}
         };
-
-
 
 
         for (int i = 0; i < map1.length; i++) {
@@ -63,14 +62,14 @@ public class Main {
         }
         terminal.flush();
 
-        char[][] bomb = new char[size.getColumns()][size.getRows()];
-        int p = random.nextInt(80);
-        int l = random.nextInt(24);
-        bomb[p][l] = 'O';
-        terminal.setCursorPosition(p,l);
-        terminal.putCharacter(bomb[p][l]);
-        terminal.flush();
 
+        int p = ThreadLocalRandom.current().nextInt(1, 10);
+        int l = ThreadLocalRandom.current().nextInt(1, 28);
+        char bomb = 'O';
+        map1[p][l] = bomb;
+        terminal.setCursorPosition(p, l);
+        terminal.putCharacter(map1[p][l]);
+        terminal.flush();
 
 
         do {
@@ -110,31 +109,45 @@ public class Main {
                         break;
                 }
                 terminal.setCursorPosition(x, y);
-                if (x >= 0 && x < map1.length && y>=0 && y<map1[0].length && map1[x][y] == ' ') {
+                if (x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
-                } else {
+                } else if (map1[x][y] == bomb){
+                    System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
+                    terminal.clearScreen();
+                    String die = "you died";
+                    char[] died = die.toCharArray();
+                    for (int i = 0; i < died.length; i++) {
+                        terminal.setCursorPosition(i, 20);
+                        terminal.putCharacter(died[i]);
+                        terminal.flush();
+                        continueReadingInput = false;
+                    }
+                } else{
                     terminal.setCursorPosition(lastX, lastY);
                     x = lastX;
                     y = lastY;
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
-                if(bomb[x][y] == map1[x][y]){
+
+                /*if(bomb == map1[x][y]){
                     int g = x + 1;
-                    bomb[x][y] = bomb[g][y];
-                } else if(bomb[x][y] == 'O'){
+                    map1[p][l] = map1[g][l];
+
+                } else*/
+               /* if (map1[x][y] == bomb) {
                     System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
                     terminal.clearScreen();
                     String die = "you died";
                     char[] died = die.toCharArray();
                     for (int i = 0; i < died.length; i++) {
-                        terminal.setCursorPosition(i,20);
+                        terminal.setCursorPosition(i, 20);
                         terminal.putCharacter(died[i]);
                     }
                     terminal.flush();
                     continueReadingInput = false;
-                }
+                }*/
             }
         } while (continueReadingInput);
     }
