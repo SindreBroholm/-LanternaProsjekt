@@ -160,12 +160,12 @@ public class Main {
                     String win = "WINNER";
                     char[] won = win.toCharArray();
                     for (int i = 0; i < won.length; i++) {
-                        terminal.setCursorPosition(i + 30, 10);
+                        terminal.setCursorPosition(i + 13, 10);
                         terminal.putCharacter(won[i]);
                         terminal.flush();
                         continueReadingInput = false;
                     }
-                }else{
+                }else {
                     terminal.setCursorPosition(lastX, lastY);
                     x = lastX;
                     y = lastY;
@@ -179,7 +179,7 @@ public class Main {
                     String die = "you died";
                     char[] died = die.toCharArray();
                     for (int i = 0; i < died.length; i++) {
-                        terminal.setCursorPosition(i + 30, 10);
+                        terminal.setCursorPosition(i + 13, 10);
                         terminal.putCharacter(died[i]);
                     }
                     terminal.flush();
