@@ -4,7 +4,6 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
-
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,32 +18,6 @@ public class Main {
         boolean continueReadingInput = true;
         Random random = new Random();
 
-
-        int x = 1;
-        int y = 1;
-        int zoombieY = ThreadLocalRandom.current().nextInt(1, 10);
-        int zoombieX = ThreadLocalRandom.current().nextInt(1, 23);
-        final char player = 'X';
-        final char zombie = 'F';
-        terminal.setCursorPosition(x, y);
-        terminal.putCharacter(player);
-        terminal.flush();
-        terminal.setCursorPosition(zoombieX, zoombieY);
-        terminal.putCharacter(zombie);
-
-
-        TerminalSize size = terminal.getTerminalSize();
-/*        char[][] map = new char[size.getColumns()][size.getRows()];
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                int bound = random.nextInt(5);
-                if (bound == 1) {
-                    map[i][j] = '\u2588';
-                } else {
-                    map[i][j] = ' ';
-                }
-            }
-        }*/
 
         char b = '\u2588';
 
@@ -88,6 +61,18 @@ public class Main {
         };
 
 
+        int x = 1;
+        int y = 1;
+        int zombieY = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
+        int zombieX = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
+        final char player = 'X';
+        final char zombie = 'F';
+        terminal.setCursorPosition(x, y);
+        terminal.putCharacter(player);
+        terminal.flush();
+        terminal.setCursorPosition(zombieX, zombieY);
+        terminal.putCharacter(zombie);
+
         for (int i = 0; i < map1.length; i++) {
             for (int j = 0; j < map1[i].length; j++) {
                 terminal.setCursorPosition(i, j);
@@ -97,10 +82,10 @@ public class Main {
         terminal.flush();
 
 
-        int p = ThreadLocalRandom.current().nextInt(1, map1.length);
-        int l = ThreadLocalRandom.current().nextInt(1, map1[1].length);
-        char bomb = 'O';
-        map1[p][l] = bomb;
+        int p = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
+        int l = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
+        char diamond = 'O';
+        map1[p][l] = diamond;
         terminal.setCursorPosition(p, l);
         terminal.putCharacter(map1[p][l]);
         terminal.flush();
@@ -124,42 +109,42 @@ public class Main {
 
                 terminal.setCursorPosition(x, y);
                 terminal.putCharacter(removePlayer);
-                terminal.setCursorPosition(zoombieX, zoombieY);
+                terminal.setCursorPosition(zombieX, zombieY);
                 terminal.putCharacter(removePlayer);
 
 
                 int lastX = x;
-                int lastZoombieX = zoombieX;
+                int lastZombieX = zombieX;
                 int lastY = y;
-                int lastZoombieY = zoombieY;
+                int lastZombieY = zombieY;
 
                 switch (type) {
                     case ArrowUp:
                         y--;
-                        zoombieY--;
+                        zombieY--;
                         break;
                     case ArrowDown:
                         y++;
-                        zoombieY++;
+                        zombieY++;
                         break;
                     case ArrowLeft:
                         x--;
-                        zoombieX--;
+                        zombieX--;
                         break;
                     case ArrowRight:
                         x++;
-                        zoombieX++;
+                        zombieX++;
                         break;
                 }
-                System.out.println("X" + zoombieX);
-                if (zoombieX >= 0 && zoombieX < map1.length && zoombieY >= 0 && zoombieY < map1[0].length && map1[zoombieX][zoombieY] == ' ') {
-                    terminal.setCursorPosition(zoombieX, zoombieY);
+                System.out.println("X" + zombieX);
+                if (zombieX >= 0 && zombieX < map1.length && zombieY >= 0 && zombieY < map1[0].length && map1[zombieX][zombieY] == ' ') {
+                    terminal.setCursorPosition(zombieX, zombieY);
                     terminal.putCharacter(zombie);
                     terminal.flush();
                 }else {
-                    terminal.setCursorPosition(lastZoombieX, lastZoombieY);
-                    zoombieX = lastZoombieX;
-                    zoombieY = lastZoombieY;
+                    terminal.setCursorPosition(lastZombieX, lastZombieY);
+                    zombieX = lastZombieX;
+                    zombieY = lastZombieY;
                     terminal.putCharacter(zombie);
                     terminal.flush();
                 }
@@ -169,7 +154,7 @@ public class Main {
                 if (x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
-                } else if (map1[x][y] == bomb) {
+                } else if (map1[x][y] == diamond) {
                     System.out.println("You won !");
                     terminal.clearScreen();
                     String die = "WINNER";
@@ -189,8 +174,8 @@ public class Main {
                     terminal.flush();
                 }
 
-                if (x == zoombieX && y == zoombieY) {
-                    System.out.println("BOMB EXPLODED HAHAHAHAHAHHAHA!!!!!");
+                if (x == zombieX && y == zombieY) {
+                    System.out.println("ZOMBIE EAT YOUR BRAIN!!");
                     terminal.clearScreen();
                     String die = "you died";
                     char[] died = die.toCharArray();
