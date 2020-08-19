@@ -33,7 +33,6 @@ public class Main {
         // Diamond and it's position
         int p = ThreadLocalRandom.current().nextInt(1, map.height() - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map.width() - 1);
-
         map.putDiamondOnMap(p, l);
 
         map.printMap(terminal);
@@ -80,6 +79,31 @@ public class Main {
                         break;
                 }
 
+                if (map.isDiamond(nextX, nextY)) {
+                    System.out.println("You won!");
+                    terminal.clearScreen();
+                    String win = "WINNER";
+                    char[] won = win.toCharArray();
+                    for (int i = 0; i < won.length; i++) {
+                        terminal.setCursorPosition(i + 13, 10);
+                        terminal.putCharacter(won[i]);
+                        terminal.flush();
+                        continueReadingInput = false;
+                    }
+                }else if(map.isLegalMove(nextX, nextY)){
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(removePlayer);
+                    playerOne.setPlayerX(nextX);
+                    playerOne.setPlayerY(nextY);
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(playerOne.getPlayerChar());
+                    terminal.flush();
+                }else{
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(playerOne.getPlayerChar());
+                    terminal.flush();
+                }
+
                 if (map.isLegalMove(nextZoombieX, nextZombieY)) {
                     terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
                     terminal.putCharacter(removePlayer);
@@ -91,20 +115,6 @@ public class Main {
                 }else {
                     terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
                     terminal.putCharacter(zoombieOne.getZoombieChar());
-                    terminal.flush();
-                }
-
-                if(map.isLegalMove(nextX, nextY)){
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(removePlayer);
-                    playerOne.setPlayerX(nextX);
-                    playerOne.setPlayerY(nextY);
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(playerOne.getPlayerChar());
-                    terminal.flush();
-                }else{
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(playerOne.getPlayerChar());
                     terminal.flush();
                 }
 
