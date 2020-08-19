@@ -1,3 +1,7 @@
+import com.googlecode.lanterna.terminal.Terminal;
+
+import java.io.IOException;
+
 public class Player {
     private char player = 'X';
     private int playerX;
@@ -21,5 +25,14 @@ public class Player {
 
     public char getPlayerChar(){
         return player;
+    }
+
+    public void updatePlayerPosision(Terminal terminal, int nextX, int nextY) throws IOException {
+        terminal.setCursorPosition(playerX, playerY);
+        terminal.putCharacter(' ');
+        playerX = nextX;
+        playerY = nextY;
+        terminal.setCursorPosition(playerX, playerY);
+        terminal.putCharacter(player);
     }
 }

@@ -1,3 +1,6 @@
+import com.googlecode.lanterna.terminal.Terminal;
+
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,4 +29,12 @@ public class Zoombie{
         return zoombie;
     }
 
+    public void updateZoombiePosision(Terminal terminal, int nextZoombieX, int nextZombieY) throws IOException {
+        terminal.setCursorPosition(zoombieX, zoombieY);
+        terminal.putCharacter(' ');
+        zoombieX = nextZoombieX;
+        zoombieY = nextZombieY;
+        terminal.setCursorPosition(zoombieX, zoombieY);
+        terminal.putCharacter(zoombie);
+    }
 }

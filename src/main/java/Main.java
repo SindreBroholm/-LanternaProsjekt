@@ -91,22 +91,11 @@ public class Main {
                         continueReadingInput = false;
                     }
                 }else if(map.isLegalMove(nextX, nextY)){
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(removePlayer);
-                    playerOne.setPlayerX(nextX);
-                    playerOne.setPlayerY(nextY);
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(playerOne.getPlayerChar());
+                    playerOne.updatePlayerPosision(terminal, nextX,nextY);
                     terminal.flush();
                 }
-
                 if (map.isLegalMove(nextZoombieX, nextZombieY)) {
-                    terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-                    terminal.putCharacter(removePlayer);
-                    zoombieOne.setZoombieX(nextZoombieX);
-                    zoombieOne.setZoombieY(nextZombieY);
-                    terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-                    terminal.putCharacter(zoombieOne.getZoombieChar());
+                    zoombieOne.updateZoombiePosision(terminal, nextZoombieX, nextZombieY);
                     terminal.flush();
                 }
 
