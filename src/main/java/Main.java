@@ -20,9 +20,8 @@ public class Main {
         zoombieOne.setZoombieX(ThreadLocalRandom.current().nextInt(1, map.height()- 1));
         map.putObjectOnMap(zoombieOne.getZoombieChar(), zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
 
-        Player playerOne = new Player();
-        playerOne.setPlayerY(1);
-        playerOne.setPlayerX(1);
+        Player playerOne = new Player(1, 1);
+
 
 
 
@@ -34,8 +33,7 @@ public class Main {
         map.printMap(terminal);
         terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
         terminal.putCharacter(zoombieOne.getZoombieChar());
-        terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-        terminal.putCharacter(playerOne.getPlayerChar());
+        playerOne.updatePlayerPosision(terminal, 1, 1);
         terminal.flush();
 
         do {
@@ -54,30 +52,14 @@ public class Main {
                 terminal.close();
             } else {
 
-                int nextX = playerOne.getPlayerX();
-                int nextZoombieX = zoombieOne.getZoombieX();
-                int nextY = playerOne.getPlayerY();
-                int nextZombieY = zoombieOne.getZoombieY();
+                Position nextZoombiePos = zoombieOne.nextPosition(type);
+                Position nextPlayerPos = playerOne.nextPosition(type);
 
-                // Move X and Zombie around
-                switch (type) {
-                    case ArrowUp:
-                        nextY--;
-                        nextZombieY--;
-                        break;
-                    case ArrowDown:
-                        nextY++;
-                        nextZombieY++;
-                        break;
-                    case ArrowLeft:
-                        nextX--;
-                        nextZoombieX--;
-                        break;
-                    case ArrowRight:
-                        nextX++;
-                        nextZoombieX++;
-                        break;
-                }
+                int nextX = nextPlayerPos.x;
+                int nextY = nextPlayerPos.y;
+                int nextZoombieX = nextZoombiePos.x;
+                int nextZombieY = nextZoombiePos.y;
+
 
                 if (map.isDiamond(nextX, nextY)) {
                     System.out.println("You won!");
@@ -87,9 +69,9 @@ public class Main {
                     for (int i = 0; i < won.length; i++) {
                         terminal.setCursorPosition(i + 13, 10);
                         terminal.putCharacter(won[i]);
-                        terminal.flush();
-                        continueReadingInput = false;
                     }
+                    terminal.flush();
+                    continueReadingInput = false;
                 }else if(map.isLegalMove(nextX, nextY)){
                     playerOne.updatePlayerPosision(terminal, nextX,nextY);
                     terminal.flush();
