@@ -3,8 +3,6 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
-import static com.googlecode.lanterna.input.KeyType.ArrowUp;
-
 public class Player {
     private char player = 'X';
     private int playerX;
@@ -19,11 +17,9 @@ public class Player {
         return playerX;
     }
 
-
     public int getPlayerY() {
         return playerY;
     }
-
 
     public Position nextPosition(KeyType keyType) {
         int nextX = playerX;
@@ -47,8 +43,7 @@ public class Player {
         return new Position(nextX, nextY);
     }
 
-
-    public void updatePlayerPosision(Terminal terminal, int nextX, int nextY) throws IOException {
+    public void updatePlayerPosition(Terminal terminal, int nextX, int nextY) throws IOException {
         terminal.setCursorPosition(playerX, playerY);
         terminal.putCharacter(' ');
         playerX = nextX;
