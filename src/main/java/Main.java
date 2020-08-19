@@ -1,11 +1,8 @@
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-
 import java.io.IOException;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -16,9 +13,6 @@ public class Main {
         terminal.setCursorVisible(false);
 
         boolean continueReadingInput = true;
-        Random random = new Random();
-
-
         char b = '\u2588';
 
         char[][] map1 = new char[][]{
@@ -60,13 +54,13 @@ public class Main {
                 {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b},
         };
 
-
+        // Zombie number 1
         int x = 1;
         int y = 1;
         int zombieY = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
         int zombieX = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
         final char player = 'X';
-        final char zombie = 'F';
+        final char zombie = '\u2620';
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
         terminal.flush();
@@ -82,6 +76,7 @@ public class Main {
         terminal.flush();
 
 
+        // Diamond and it's position
         int p = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
         char diamond = 'O';
@@ -98,6 +93,9 @@ public class Main {
                 Thread.sleep(5); // might throw InterruptedException
                 keyStroke = terminal.pollInput();
             } while (keyStroke == null);
+
+
+            // Quit game
             KeyType type = keyStroke.getKeyType();
             Character c = keyStroke.getCharacter(); // used Character, not char because it might be null
             if (c == Character.valueOf('q')) {
@@ -118,6 +116,7 @@ public class Main {
                 int lastY = y;
                 int lastZombieY = zombieY;
 
+                // Move X and Zombie around
                 switch (type) {
                     case ArrowUp:
                         y--;
@@ -137,6 +136,8 @@ public class Main {
                         break;
                 }
                 System.out.println("X" + zombieX);
+
+
                 if (zombieX >= 0 && zombieX < map1.length && zombieY >= 0 && zombieY < map1[0].length && map1[zombieX][zombieY] == ' ') {
                     terminal.setCursorPosition(zombieX, zombieY);
                     terminal.putCharacter(zombie);
@@ -149,24 +150,22 @@ public class Main {
                     terminal.flush();
                 }
 
-
                 terminal.setCursorPosition(x, y);
                 if (x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ') {
                     terminal.putCharacter(player);
                     terminal.flush();
                 } else if (map1[x][y] == diamond) {
-                    System.out.println("You won !");
+                    System.out.println("You won!");
                     terminal.clearScreen();
-                    String die = "WINNER";
-                    char[] died = die.toCharArray();
-                    for (int i = 0; i < died.length; i++) {
-                        terminal.setCursorPosition(i, 20);
-                        terminal.putCharacter(died[i]);
+                    String win = "WINNER";
+                    char[] won = win.toCharArray();
+                    for (int i = 0; i < won.length; i++) {
+                        terminal.setCursorPosition(i + 30, 10);
+                        terminal.putCharacter(won[i]);
                         terminal.flush();
                         continueReadingInput = false;
                     }
-                }
-                else{
+                }else{
                     terminal.setCursorPosition(lastX, lastY);
                     x = lastX;
                     y = lastY;
@@ -180,7 +179,7 @@ public class Main {
                     String die = "you died";
                     char[] died = die.toCharArray();
                     for (int i = 0; i < died.length; i++) {
-                        terminal.setCursorPosition(i, 20);
+                        terminal.setCursorPosition(i + 30, 10);
                         terminal.putCharacter(died[i]);
                     }
                     terminal.flush();
