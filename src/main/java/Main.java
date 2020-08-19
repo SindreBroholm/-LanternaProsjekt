@@ -79,7 +79,7 @@ public class Main {
         // Diamond and it's position
         int p = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
-        char diamond = 'O';
+        char diamond = '\u2606';
         map1[p][l] = diamond;
         terminal.setCursorPosition(p, l);
         terminal.putCharacter(map1[p][l]);
@@ -191,5 +191,3 @@ public class Main {
             } while (continueReadingInput) ;
         }
     }
-
-
