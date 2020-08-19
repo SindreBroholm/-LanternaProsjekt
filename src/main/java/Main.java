@@ -13,78 +13,29 @@ public class Main {
         terminal.setCursorVisible(false);
 
         boolean continueReadingInput = true;
-        char b = '\u2588';
 
-        char[][] map1 = new char[][]{
-                {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b},
-                {b, ' ', ' ', b, ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', b, ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', b, ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b, b, b, b, ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', b, ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', b, ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b, ' ', b},
-                {b, ' ', ' ', b, b, b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b, ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, b, b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', b, b, b, b, ' ', ' ', b, b, b, b, b, b, b, ' ', ' ', b, b, ' ', ' ', b, b, b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, b, b, b, b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b, b, b, b, ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, b, b, b, b, b, b, b, ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', b},
-                {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b},
-        };
+        Map map = new Map();
 
         // Zombie number 1
-        int x = 1;
-        int y = 1;
-        int zombieY = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
-        int zombieX = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
+        int playerX = 1;
+        int playerY = 1;
+        int zombieY = ThreadLocalRandom.current().nextInt(1, map.width()- 1);
+        int zombieX = ThreadLocalRandom.current().nextInt(1,  map.height()- 1);
         final char player = 'X';
         final char zombie = '\u2620';
-        terminal.setCursorPosition(x, y);
+        terminal.setCursorPosition(playerX, playerY);
         terminal.putCharacter(player);
         terminal.flush();
         terminal.setCursorPosition(zombieX, zombieY);
         terminal.putCharacter(zombie);
-
-        for (int i = 0; i < map1.length; i++) {
-            for (int j = 0; j < map1[i].length; j++) {
-                terminal.setCursorPosition(i, j);
-                terminal.putCharacter(map1[i][j]);
-            }
-        }
-        terminal.flush();
-
-
         // Diamond and it's position
-        int p = ThreadLocalRandom.current().nextInt(1, map1.length - 1);
-        int l = ThreadLocalRandom.current().nextInt(1, map1[1].length - 1);
-        char diamond = '\u2606';
-        map1[p][l] = diamond;
-        terminal.setCursorPosition(p, l);
-        terminal.putCharacter(map1[p][l]);
-        terminal.flush();
+        int p = ThreadLocalRandom.current().nextInt(1, map.height() - 1);
+        int l = ThreadLocalRandom.current().nextInt(1, map.width() - 1);
 
+        map.putDiamondOnMap(p, l);
+
+        map.printMap(terminal);
+        terminal.flush();
 
         do {
             final char removePlayer = ' ';
@@ -105,40 +56,40 @@ public class Main {
             } else {
                 System.out.println(c);
 
-                terminal.setCursorPosition(x, y);
+                terminal.setCursorPosition(playerX, playerY);
                 terminal.putCharacter(removePlayer);
                 terminal.setCursorPosition(zombieX, zombieY);
                 terminal.putCharacter(removePlayer);
 
 
-                int lastX = x;
+                int lastX = playerX;
                 int lastZombieX = zombieX;
-                int lastY = y;
+                int lastY = playerY;
                 int lastZombieY = zombieY;
 
                 // Move X and Zombie around
                 switch (type) {
                     case ArrowUp:
-                        y--;
+                        playerY--;
                         zombieY--;
                         break;
                     case ArrowDown:
-                        y++;
+                        playerY++;
                         zombieY++;
                         break;
                     case ArrowLeft:
-                        x--;
+                        playerX--;
                         zombieX--;
                         break;
                     case ArrowRight:
-                        x++;
+                        playerX++;
                         zombieX++;
                         break;
                 }
                 System.out.println("X" + zombieX);
 
 
-                if (zombieX >= 0 && zombieX < map1.length && zombieY >= 0 && zombieY < map1[0].length && map1[zombieX][zombieY] == ' ') {
+                if (map.isLegalMove(zombieX, zombieY)) {
                     terminal.setCursorPosition(zombieX, zombieY);
                     terminal.putCharacter(zombie);
                     terminal.flush();
@@ -150,11 +101,11 @@ public class Main {
                     terminal.flush();
                 }
 
-                terminal.setCursorPosition(x, y);
-                if (x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ') {
+                terminal.setCursorPosition(playerX, playerY);
+                if (map.isLegalMove(playerX, playerY)) {
                     terminal.putCharacter(player);
                     terminal.flush();
-                } else if (map1[x][y] == diamond) {
+                } else if (map.isDiamond(playerX, playerY)) {
                     System.out.println("You won!");
                     terminal.clearScreen();
                     String win = "WINNER";
@@ -167,13 +118,13 @@ public class Main {
                     }
                 }else {
                     terminal.setCursorPosition(lastX, lastY);
-                    x = lastX;
-                    y = lastY;
+                    playerX = lastX;
+                    playerY = lastY;
                     terminal.putCharacter(player);
                     terminal.flush();
                 }
 
-                if (x == zombieX && y == zombieY) {
+                if (playerX == zombieX && playerY == zombieY) {
                     System.out.println("ZOMBIE EAT YOUR BRAIN!!");
                     terminal.clearScreen();
                     String die = "you died";
