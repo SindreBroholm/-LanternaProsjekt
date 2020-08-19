@@ -23,11 +23,7 @@ public class Main {
         Player playerOne = new Player();
         playerOne.setPlayerY(1);
         playerOne.setPlayerX(1);
-        map.putObjectOnMap(playerOne.getPlayerChar(), 1,1);
 
-
-        terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-        terminal.putCharacter(zoombieOne.getZoombieChar());
 
 
         // Diamond and it's position
@@ -36,6 +32,10 @@ public class Main {
         map.putDiamondOnMap(p, l);
 
         map.printMap(terminal);
+        terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
+        terminal.putCharacter(zoombieOne.getZoombieChar());
+        terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+        terminal.putCharacter(playerOne.getPlayerChar());
         terminal.flush();
 
         do {
@@ -98,10 +98,6 @@ public class Main {
                     terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
                     terminal.putCharacter(playerOne.getPlayerChar());
                     terminal.flush();
-                }else{
-                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
-                    terminal.putCharacter(playerOne.getPlayerChar());
-                    terminal.flush();
                 }
 
                 if (map.isLegalMove(nextZoombieX, nextZombieY)) {
@@ -112,23 +108,6 @@ public class Main {
                     terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
                     terminal.putCharacter(zoombieOne.getZoombieChar());
                     terminal.flush();
-                }else {
-                    terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-                    terminal.putCharacter(zoombieOne.getZoombieChar());
-                    terminal.flush();
-                }
-
-                if (map.isDiamond(playerOne.getPlayerX(), playerOne.getPlayerY())) {
-                    System.out.println("You won!");
-                    terminal.clearScreen();
-                    String win = "WINNER";
-                    char[] won = win.toCharArray();
-                    for (int i = 0; i < won.length; i++) {
-                        terminal.setCursorPosition(i + 13, 10);
-                        terminal.putCharacter(won[i]);
-                        terminal.flush();
-                        continueReadingInput = false;
-                    }
                 }
 
                 if (playerOne.getPlayerX() == zoombieOne.getZoombieX() && playerOne.getPlayerY() == zoombieOne.getZoombieY()) {
