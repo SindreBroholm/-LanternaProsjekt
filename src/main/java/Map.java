@@ -4,9 +4,7 @@ import java.io.IOException;
 
 public class Map {
     char b = '\u2588';
-
     char diamond = '\u2606';
-
 
     public char[][] map1 = new char[][]{
             {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b},
