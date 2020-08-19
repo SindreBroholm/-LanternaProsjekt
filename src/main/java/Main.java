@@ -15,17 +15,16 @@ public class Main {
         boolean continueReadingInput = true;
 
         Map map = new Map();
-        Zoombie zoombieOne = new Zoombie();
-        zoombieOne.setZoombieY(ThreadLocalRandom.current().nextInt(1, map.width()- 1));
-        zoombieOne.setZoombieX(ThreadLocalRandom.current().nextInt(1, map.height()- 1));
+
+        Zoombie zoombieOne = new Zoombie(ThreadLocalRandom.current().nextInt(1, map.height()- 1), ThreadLocalRandom.current().nextInt(1, map.width()- 1));
         map.putObjectOnMap(zoombieOne.getZoombieChar(), zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
 
+        Zoombie zoombieTwo = new Zoombie(ThreadLocalRandom.current().nextInt(1, map.height()- 1), ThreadLocalRandom.current().nextInt(1, map.width()- 1));
+        map.putObjectOnMap(zoombieTwo.getZoombieChar(), zoombieTwo.getZoombieX(), zoombieTwo.getZoombieY());
+
+
+
         Player playerOne = new Player(1, 1);
-
-
-
-
-        // Diamond and it's position
         int p = ThreadLocalRandom.current().nextInt(1, map.height() - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map.width() - 1);
         map.putDiamondOnMap(p, l);
@@ -33,6 +32,8 @@ public class Main {
         map.printMap(terminal);
         terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
         terminal.putCharacter(zoombieOne.getZoombieChar());
+        terminal.setCursorPosition(zoombieTwo.getZoombieX(), zoombieTwo.getZoombieY());
+        terminal.putCharacter(zoombieTwo.getZoombieChar());
         playerOne.updatePlayerPosision(terminal, 1, 1);
         terminal.flush();
 
@@ -52,14 +53,16 @@ public class Main {
                 terminal.close();
             } else {
 
-                Position nextZoombiePos = zoombieOne.nextPosition(type);
+                Position nextZoombiePos = zoombieOne.nextPosition(playerOne);
+                Position nextZoombieTwoPos = zoombieTwo.nextPosition(playerOne);
                 Position nextPlayerPos = playerOne.nextPosition(type);
 
                 int nextX = nextPlayerPos.x;
                 int nextY = nextPlayerPos.y;
                 int nextZoombieX = nextZoombiePos.x;
                 int nextZombieY = nextZoombiePos.y;
-
+                int nextZoombieTwoX = nextZoombieTwoPos.x;
+                int nextZoombieTwoY = nextZoombieTwoPos.y;
 
                 if (map.isDiamond(nextX, nextY)) {
                     System.out.println("You won!");
@@ -80,8 +83,13 @@ public class Main {
                     zoombieOne.updateZoombiePosision(terminal, nextZoombieX, nextZombieY);
                     terminal.flush();
                 }
+                if (map.isLegalMove(nextZoombieTwoX, nextZoombieTwoY)) {
+                    zoombieTwo.updateZoombiePosision(terminal, nextZoombieTwoX, nextZoombieTwoY);
+                    terminal.flush();
+                }
 
-                if (playerOne.getPlayerX() == zoombieOne.getZoombieX() && playerOne.getPlayerY() == zoombieOne.getZoombieY()) {
+                if (playerOne.getPlayerX() == zoombieOne.getZoombieX() && playerOne.getPlayerY() == zoombieOne.getZoombieY()
+                        || playerOne.getPlayerX() == zoombieTwo.getZoombieX() && playerOne.getPlayerY() == zoombieTwo.getZoombieY()) {
                     System.out.println("ZOMBIE EAT YOUR BRAIN!!");
                     terminal.clearScreen();
                     String die = "you died";

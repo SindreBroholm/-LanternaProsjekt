@@ -8,6 +8,10 @@ public class Zoombie{
     private int zoombieX;
     private int zoombieY;
 
+    public Zoombie(int zoombieX, int zoombieY) {
+        this.zoombieX = zoombieX;
+        this.zoombieY = zoombieY;
+    }
 
     public int getZoombieX() {
         return zoombieX;
@@ -29,11 +33,29 @@ public class Zoombie{
         return zoombie;
     }
 
-    public Position nextPosition(KeyType keyType) {
+    public Position nextPosition( Player player) {
         int nextZoombieX = zoombieX;
         int nextZoombieY = zoombieY;
 
-        // Move X and Zombie around
+        if(player.getPlayerX() < zoombieX){
+            nextZoombieX = zoombieX - 1;
+        }else if (player.getPlayerX() > zoombieX){
+            nextZoombieX = zoombieX + 1;
+        } else {
+            nextZoombieX = zoombieX;
+        }
+
+        if(player.getPlayerY() < zoombieY){
+            nextZoombieY = zoombieY - 1;
+        } else if (player.getPlayerY() > zoombieY){
+            nextZoombieY = zoombieY + 1;
+        }else {
+            nextZoombieY = zoombieY;
+        }
+
+
+
+        /*// Move X and Zombie around
         switch (keyType) {
             case ArrowUp:
                 nextZoombieY--;
@@ -47,7 +69,7 @@ public class Zoombie{
             case ArrowRight:
                 nextZoombieX++;
                 break;
-        }
+        }*/
         return new Position(nextZoombieX, nextZoombieY);
     }
 
