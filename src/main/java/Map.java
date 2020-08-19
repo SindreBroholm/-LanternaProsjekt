@@ -67,6 +67,10 @@ public class Map {
     public void putDiamondOnMap(int x, int y) {
         map1[x][y] = diamond;
     }
+    public void putObjectOnMap(char object, int x, int y) {
+        map1[x][y] = object;
+    }
+
 
     public boolean isLegalMove(int x, int y) {
         return x >= 0 && x < map1.length && y >= 0 && y < map1[0].length && map1[x][y] == ' ';
