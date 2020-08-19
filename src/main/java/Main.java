@@ -16,19 +16,20 @@ public class Main {
 
         Map map = new Map();
         Zoombie zoombieOne = new Zoombie();
-        // Zombie number 1
-        int playerX = 1;
-        int playerY = 1;
         zoombieOne.setZoombieY(ThreadLocalRandom.current().nextInt(1, map.width()- 1));
         zoombieOne.setZoombieX(ThreadLocalRandom.current().nextInt(1, map.height()- 1));
         map.putObjectOnMap(zoombieOne.getZoombieChar(), zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-        final char player = 'X';
-        //final char zombie = '\u2620';
-        terminal.setCursorPosition(playerX, playerY);
-        terminal.putCharacter(player);
-        terminal.flush();
+
+        Player playerOne = new Player();
+        playerOne.setPlayerY(1);
+        playerOne.setPlayerX(1);
+        map.putObjectOnMap(playerOne.getPlayerChar(), 1,1);
+
+
         terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
         terminal.putCharacter(zoombieOne.getZoombieChar());
+
+
         // Diamond and it's position
         int p = ThreadLocalRandom.current().nextInt(1, map.height() - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map.width() - 1);
@@ -45,8 +46,6 @@ public class Main {
                 Thread.sleep(5); // might throw InterruptedException
                 keyStroke = terminal.pollInput();
             } while (keyStroke == null);
-
-
             // Quit game
             KeyType type = keyStroke.getKeyType();
             Character c = keyStroke.getCharacter(); // used Character, not char because it might be null
@@ -55,60 +54,61 @@ public class Main {
                 System.out.println("quit");
                 terminal.close();
             } else {
-                System.out.println(c);
 
-                terminal.setCursorPosition(playerX, playerY);
-                terminal.putCharacter(removePlayer);
-                terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
-                terminal.putCharacter(removePlayer);
-
-
-                int lastX = playerX;
-                int lastZombieX = zoombieOne.getZoombieX();
-                int lastY = playerY;
-                int lastZombieY = zoombieOne.getZoombieY();
+                int nextX = playerOne.getPlayerX();
+                int nextZoombieX = zoombieOne.getZoombieX();
+                int nextY = playerOne.getPlayerY();
+                int nextZombieY = zoombieOne.getZoombieY();
 
                 // Move X and Zombie around
                 switch (type) {
                     case ArrowUp:
-                        playerY--;
-                        zoombieOne.setZoombieY(zoombieOne.getZoombieY()-1);
+                        nextY--;
+                        nextZombieY--;
                         break;
                     case ArrowDown:
-                        playerY++;
-                        zoombieOne.setZoombieY(zoombieOne.getZoombieY()+1);
+                        nextY++;
+                        nextZombieY++;
                         break;
                     case ArrowLeft:
-                        playerX--;
-                        zoombieOne.setZoombieX(zoombieOne.getZoombieX()-1);
+                        nextX--;
+                        nextZoombieX--;
                         break;
                     case ArrowRight:
-                        playerX++;
-                        zoombieOne.setZoombieX(zoombieOne.getZoombieX()+1);
+                        nextX++;
+                        nextZoombieX++;
                         break;
                 }
-                System.out.println("X:" + zoombieOne.getZoombieX() + "Y:"+ zoombieOne.getZoombieY());
-                System.out.println("X:" + playerX + "Y:"+ playerY);
 
-
-
-                if (map.isLegalMove(zoombieOne.getZoombieX(), zoombieOne.getZoombieY())) {
+                if (map.isLegalMove(nextZoombieX, nextZombieY)) {
+                    terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
+                    terminal.putCharacter(removePlayer);
+                    zoombieOne.setZoombieX(nextZoombieX);
+                    zoombieOne.setZoombieY(nextZombieY);
                     terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
                     terminal.putCharacter(zoombieOne.getZoombieChar());
                     terminal.flush();
                 }else {
-                    terminal.setCursorPosition(lastZombieX, lastZombieY);
-                    zoombieOne.setZoombieX(lastZombieX);
-                    zoombieOne.setZoombieY(lastZombieY);
+                    terminal.setCursorPosition(zoombieOne.getZoombieX(), zoombieOne.getZoombieY());
                     terminal.putCharacter(zoombieOne.getZoombieChar());
                     terminal.flush();
                 }
 
-                terminal.setCursorPosition(playerX, playerY);
-                if (map.isLegalMove(playerX, playerY)) {
-                    terminal.putCharacter(player);
+                if(map.isLegalMove(nextX, nextY)){
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(removePlayer);
+                    playerOne.setPlayerX(nextX);
+                    playerOne.setPlayerY(nextY);
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(playerOne.getPlayerChar());
                     terminal.flush();
-                } else if (map.isDiamond(playerX, playerY)) {
+                }else{
+                    terminal.setCursorPosition(playerOne.getPlayerX(), playerOne.getPlayerY());
+                    terminal.putCharacter(playerOne.getPlayerChar());
+                    terminal.flush();
+                }
+
+                if (map.isDiamond(playerOne.getPlayerX(), playerOne.getPlayerY())) {
                     System.out.println("You won!");
                     terminal.clearScreen();
                     String win = "WINNER";
@@ -119,15 +119,9 @@ public class Main {
                         terminal.flush();
                         continueReadingInput = false;
                     }
-                }else {
-                    terminal.setCursorPosition(lastX, lastY);
-                    playerX = lastX;
-                    playerY = lastY;
-                    terminal.putCharacter(player);
-                    terminal.flush();
                 }
 
-                if (playerX == zoombieOne.getZoombieX() && playerY == zoombieOne.getZoombieY()) {
+                if (playerOne.getPlayerX() == zoombieOne.getZoombieX() && playerOne.getPlayerY() == zoombieOne.getZoombieY()) {
                     System.out.println("ZOMBIE EAT YOUR BRAIN!!");
                     terminal.clearScreen();
                     String die = "you died";
