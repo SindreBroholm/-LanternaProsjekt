@@ -15,20 +15,23 @@ public class Main {
         boolean continueReadingInput = true;
 
         Map map = new Map();
+        Player player = new Player();
 
-        // Zombie number 1
+
         int playerX = 1;
         int playerY = 1;
         int zombieY = ThreadLocalRandom.current().nextInt(1, map.width()- 1);
         int zombieX = ThreadLocalRandom.current().nextInt(1,  map.height()- 1);
-        final char player = 'X';
+
+
         final char zombie = '\u2620';
         terminal.setCursorPosition(playerX, playerY);
-        terminal.putCharacter(player);
+        player.printPlayer(terminal);
         terminal.flush();
         terminal.setCursorPosition(zombieX, zombieY);
         terminal.putCharacter(zombie);
-        // Diamond and it's position
+
+
         int p = ThreadLocalRandom.current().nextInt(1, map.height() - 1);
         int l = ThreadLocalRandom.current().nextInt(1, map.width() - 1);
 
@@ -103,7 +106,7 @@ public class Main {
 
                 terminal.setCursorPosition(playerX, playerY);
                 if (map.isLegalMove(playerX, playerY)) {
-                    terminal.putCharacter(player);
+                    player.printPlayer(terminal);
                     terminal.flush();
                 } else if (map.isDiamond(playerX, playerY)) {
                     System.out.println("You won!");
@@ -120,7 +123,7 @@ public class Main {
                     terminal.setCursorPosition(lastX, lastY);
                     playerX = lastX;
                     playerY = lastY;
-                    terminal.putCharacter(player);
+                    player.printPlayer(terminal);
                     terminal.flush();
                 }
 
