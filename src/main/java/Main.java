@@ -25,8 +25,7 @@ public class Main {
 
 
         final char zombie = '\u2620';
-        terminal.setCursorPosition(playerX, playerY);
-        player.printPlayer(terminal);
+        player.initPlayer(terminal);
         terminal.flush();
         terminal.setCursorPosition(zombieX, zombieY);
         terminal.putCharacter(zombie);
@@ -73,19 +72,19 @@ public class Main {
                 // Move X and Zombie around
                 switch (type) {
                     case ArrowUp:
-                        playerY--;
+                        player.playerMoveUp(terminal);
                         zombieY--;
                         break;
                     case ArrowDown:
-                        playerY++;
+                        player.playerMoveDown(terminal);
                         zombieY++;
                         break;
                     case ArrowLeft:
-                        playerX--;
+                        player.playerMoveLeft(terminal);
                         zombieX--;
                         break;
                     case ArrowRight:
-                        playerX++;
+                        player.playerMoveRight(terminal);
                         zombieX++;
                         break;
                 }
@@ -106,7 +105,7 @@ public class Main {
 
                 terminal.setCursorPosition(playerX, playerY);
                 if (map.isLegalMove(playerX, playerY)) {
-                    player.printPlayer(terminal);
+                    player.playerMove(terminal);
                     terminal.flush();
                 } else if (map.isDiamond(playerX, playerY)) {
                     System.out.println("You won!");
@@ -123,7 +122,7 @@ public class Main {
                     terminal.setCursorPosition(lastX, lastY);
                     playerX = lastX;
                     playerY = lastY;
-                    player.printPlayer(terminal);
+                    terminal.putCharacter(player);
                     terminal.flush();
                 }
 
